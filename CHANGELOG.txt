@@ -1,0 +1,17 @@
+### 18 Juni 2014
+Update core to Codeigniter 220
+
+### 28 Maret 2014
+Update some minor bugs.
+
+### 14 Maret 2014
+Hapus session match ip.
+
+### 13 Maret 2014
+Tambah captcha untuk halaman login.
+
+### 08 Maret 2014
+Update link menuju halaman admin.
+
+### 02 Maret 2014
+Update hasil seleksi, untuk halaman siswa yang sebelumnya menampilkan "diterima", "cadangan", dan "ditolak", sekarang dirubah menjadi "diterima" dan "cadangan" saja.

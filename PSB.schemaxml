@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="latin1" collation="latin1_swedish_ci">psb</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="jurusan" view="colnames">
+<left>780</left>
+<top>118</top>
+<width>116</width>
+<height>118</height>
+<sql_create_table>CREATE TABLE `jurusan` (
+  `jur_id` int(11) NOT NULL AUTO_INCREMENT,
+  `jur_nama` varchar(128) NOT NULL,
+  `jur_singkatan` char(16) DEFAULT NULL,
+  `jur_no_sk` varchar(255) DEFAULT NULL,
+  `jur_tanggal` date DEFAULT NULL,
+  `jur_keterangan` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`jur_id`),
+  UNIQUE KEY `UNIQUE` (`jur_nama`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="siswa" view="colnames">
+<left>514</left>
+<top>149</top>
+<width>196</width>
+<height>341</height>
+<sql_create_table>CREATE TABLE `siswa` (
+  `siswa_id` int(11) NOT NULL AUTO_INCREMENT,
+  `siswa_gel` int(11) NOT NULL,
+  `siswa_no_pendaftaran` int(8) NOT NULL,
+  `siswa_nama` varchar(128) NOT NULL,
+  `siswa_nama_panggilan` varchar(32) DEFAULT NULL,
+  `siswa_jenis_kelamin` enum('l','p') DEFAULT 'l',
+  `siswa_tempat_lahir` varchar(64) NOT NULL,
+  `siswa_tanggal_lahir` date NOT NULL,
+  `siswa_agama` int(11) DEFAULT NULL,
+  `siswa_suku` varchar(64) DEFAULT NULL,
+  `siswa_sekolah_asal` varchar(128) NOT NULL,
+  `siswa_sekolah_alamat` varchar(255) DEFAULT NULL,
+  `siswa_jumlah_saudara` int(2) DEFAULT NULL,
+  `siswa_alamat` varchar(255) DEFAULT NULL,
+  `siswa_prov` int(11) DEFAULT NULL,
+  `siswa_kabupaten` varchar(64) DEFAULT NULL,
+  `siswa_kecamatan` varchar(64) DEFAULT NULL,
+  `siswa_kode_pos` char(16) DEFAULT NULL,
+  `siswa_alamat_pos` varchar(255) DEFAULT NULL,
+  `siswa_telepon` char(16) DEFAULT NULL,
+  `siswa_hp` char(16) DEFAULT NULL,
+  `siswa_email` varchar(128) DEFAULT NULL,
+  `siswa_gol_darah` enum('none','a','b','ab','o') DEFAULT 'none',
+  `siswa_anak_ke` int(2) DEFAULT NULL,
+  `siswa_tinggi_badan` char(16) DEFAULT NULL,
+  `siswa_berat_badan` char(16) DEFAULT NULL,
+  `siswa_penyakit` varchar(255) DEFAULT NULL,
+  `siswa_tanggal_daftar` date DEFAULT NULL,
+  `siswa_status` enum('blm_dicek','sdh_dicek') NOT NULL DEFAULT 'blm_dicek',
+  `siswa_ulang` enum('sudah','belum') DEFAULT 'belum',
+  `siswa_tanggal_ulang` date DEFAULT NULL,
+  `siswa_keterangan` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`siswa_id`),
+  UNIQUE KEY `UNIQUE` (`siswa_no_pendaftaran`),
+  KEY `siswa_agama` (`siswa_agama`),
+  KEY `siswa_suku` (`siswa_suku`),
+  KEY `siswa_prov` (`siswa_prov`),
+  KEY `siswa_gel` (`siswa_gel`),
+  CONSTRAINT `siswa_agama` FOREIGN KEY (`siswa_agama`) REFERENCES `agama` (`agama_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `siswa_gel` FOREIGN KEY (`siswa_gel`) REFERENCES `gelombang` (`gel_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `siswa_prov` FOREIGN KEY (`siswa_prov`) REFERENCES `provinsi` (`prov_id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=528 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="agama" view="colnames">
+<left>15</left>
+<top>19</top>
+<width>122</width>
+<height>118</height>
+<sql_create_table>CREATE TABLE `agama` (
+  `agama_id` int(11) NOT NULL AUTO_INCREMENT,
+  `agama_nama` varchar(64) NOT NULL,
+  `agama_keterangan` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`agama_id`),
+  UNIQUE KEY `UNIQUE` (`agama_nama`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="provinsi" view="colnames">
+<left>23</left>
+<top>128</top>
+<width>158</width>
+<height>154</height>
+<sql_create_table>CREATE TABLE `provinsi` (
+  `prov_id` int(11) NOT NULL AUTO_INCREMENT,
+  `prov_nama` varchar(64) NOT NULL,
+  `prov_pulau` varchar(64) DEFAULT NULL,
+  `prov_keterangan` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`prov_id`),
+  UNIQUE KEY `UNIQUE` (`prov_nama`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="orang_tua" view="colnames">
+<left>963</left>
+<top>296</top>
+<width>128</width>
+<height>208</height>
+<sql_create_table>CREATE TABLE `orang_tua` (
+  `ot_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ot_siswa` int(11) DEFAULT NULL,
+  `ot_nama_ayah` varchar(255) DEFAULT NULL,
+  `ot_pend_ayah` int(11) DEFAULT NULL,
+  `ot_pek_ayah` int(11) DEFAULT NULL,
+  `ot_gaji_ayah` char(16) DEFAULT NULL,
+  `ot_hp_ayah` varchar(16) DEFAULT NULL,
+  `ot_nama_ibu` varchar(255) DEFAULT NULL,
+  `ot_pend_ibu` int(11) DEFAULT NULL,
+  `ot_pek_ibu` int(11) DEFAULT NULL,
+  `ot_gaji_ibu` char(16) DEFAULT NULL,
+  `ot_hp_ibu` varchar(16) DEFAULT NULL,
+  `ot_alamat_ortu` varchar(255) DEFAULT NULL,
+  `ot_nama_wali` varchar(255) DEFAULT NULL,
+  `ot_pend_wali` int(11) DEFAULT NULL,
+  `ot_pek_wali` int(11) DEFAULT NULL,
+  `ot_gaji_wali` char(16) DEFAULT NULL,
+  `ot_hp_wali` varchar(16) DEFAULT NULL,
+  `ot_alamat_wali` varchar(255) DEFAULT NULL,
+  `ot_status_asuh` enum('ortu','wali') DEFAULT 'ortu',
+  PRIMARY KEY (`ot_id`),
+  UNIQUE KEY `UNIQUE` (`ot_siswa`),
+  KEY `ot_siswa` (`ot_siswa`),
+  KEY `ot_pen_ayah` (`ot_pend_ayah`),
+  KEY `ot_pen_ibu` (`ot_pend_ibu`),
+  KEY `ot_pen_wali` (`ot_pend_wali`),
+  KEY `ot_pek_ayah` (`ot_pek_ayah`),
+  KEY `ot_pek_ibu` (`ot_pek_ibu`),
+  KEY `ot_pek_wali` (`ot_pek_wali`),
+  CONSTRAINT `ot_pek_ayah` FOREIGN KEY (`ot_pek_ayah`) REFERENCES `pekerjaan` (`pek_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `ot_pek_ibu` FOREIGN KEY (`ot_pek_ibu`) REFERENCES `pekerjaan` (`pek_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `ot_pek_wali` FOREIGN KEY (`ot_pek_wali`) REFERENCES `pekerjaan` (`pek_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `ot_pen_ayah` FOREIGN KEY (`ot_pend_ayah`) REFERENCES `pendidikan` (`pend_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `ot_pen_ibu` FOREIGN KEY (`ot_pend_ibu`) REFERENCES `pendidikan` (`pend_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `ot_pen_wali` FOREIGN KEY (`ot_pend_wali`) REFERENCES `pendidikan` (`pend_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `ot_siswa` FOREIGN KEY (`ot_siswa`) REFERENCES `siswa` (`siswa_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=528 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="pendidikan" view="colnames">
+<left>723</left>
+<top>329</top>
+<width>148</width>
+<height>127</height>
+<sql_create_table>CREATE TABLE `pendidikan` (
+  `pend_id` int(11) NOT NULL AUTO_INCREMENT,
+  `pend_nama` varchar(64) NOT NULL,
+  `pend_keterangan` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`pend_id`),
+  UNIQUE KEY `UNIQUE` (`pend_nama`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="pekerjaan" view="colnames">
+<left>748</left>
+<top>419</top>
+<width>138</width>
+<height>113</height>
+<sql_create_table>CREATE TABLE `pekerjaan` (
+  `pek_id` int(11) NOT NULL AUTO_INCREMENT,
+  `pek_nama` varchar(64) NOT NULL,
+  `pek_keterangan` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`pek_id`),
+  UNIQUE KEY `UNIQUE` (`pek_nama`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="nilai" view="colnames">
+<left>734</left>
+<top>13</top>
+<width>136</width>
+<height>125</height>
+<sql_create_table>CREATE TABLE `nilai` (
+  `nilai_id` int(11) NOT NULL AUTO_INCREMENT,
+  `nilai_siswa` int(11) DEFAULT NULL,
+  `nilai_mapel` int(11) DEFAULT NULL,
+  `nilai_uan` decimal(5,2) NOT NULL DEFAULT '0.00',
+  PRIMARY KEY (`nilai_id`),
+  UNIQUE KEY `UNIQUE` (`nilai_siswa`,`nilai_mapel`),
+  KEY `nilai_siswa` (`nilai_siswa`),
+  KEY `nilai_mapel` (`nilai_mapel`),
+  CONSTRAINT `nilai_mapel` FOREIGN KEY (`nilai_mapel`) REFERENCES `mata_pelajaran` (`mapel_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `nilai_siswa` FOREIGN KEY (`nilai_siswa`) REFERENCES `siswa` (`siswa_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2109 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="mata_pelajaran" view="colnames">
+<left>444</left>
+<top>8</top>
+<width>158</width>
+<height>153</height>
+<sql_create_table>CREATE TABLE `mata_pelajaran` (
+  `mapel_id` int(11) NOT NULL AUTO_INCREMENT,
+  `mapel_gel` int(11) DEFAULT NULL,
+  `mapel_nama` varchar(64) NOT NULL,
+  `mapel_singkatan` char(16) DEFAULT NULL,
+  `mapel_keterangan` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`mapel_id`),
+  UNIQUE KEY `UNIQUE` (`mapel_nama`,`mapel_gel`),
+  KEY `mapel_gel` (`mapel_gel`),
+  CONSTRAINT `mapel_gel` FOREIGN KEY (`mapel_gel`) REFERENCES `gelombang` (`gel_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="pilihan" view="colnames">
+<left>953</left>
+<top>142</top>
+<width>122</width>
+<height>149</height>
+<sql_create_table>CREATE TABLE `pilihan` (
+  `pilihan_id` int(11) NOT NULL AUTO_INCREMENT,
+  `pilihan_siswa` int(11) DEFAULT NULL,
+  `pilihan_jur` int(11) DEFAULT NULL,
+  `pilihan_ke` smallint(1) NOT NULL,
+  `pilihan_status` enum('kosong','diterima','cadangan','ditolak') DEFAULT 'kosong',
+  PRIMARY KEY (`pilihan_id`),
+  UNIQUE KEY `UNIQUE` (`pilihan_siswa`,`pilihan_ke`),
+  KEY `pilihan_siswa` (`pilihan_siswa`),
+  KEY `pilihan_jur` (`pilihan_jur`),
+  CONSTRAINT `pilihan_jur` FOREIGN KEY (`pilihan_jur`) REFERENCES `jurusan` (`jur_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `pilihan_siswa` FOREIGN KEY (`pilihan_siswa`) REFERENCES `siswa` (`siswa_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1582 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="users" view="colnames">
+<left>16</left>
+<top>403</top>
+<width>139</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_username` varchar(128) NOT NULL,
+  `user_password` varchar(32) NOT NULL,
+  `user_email` varchar(100) NOT NULL,
+  `user_pangkat` enum('admin','user') NOT NULL DEFAULT 'user',
+  `user_nama` varchar(128) DEFAULT NULL,
+  `user_tanggal` date DEFAULT NULL,
+  `user_keterangan` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `UNIQUE` (`user_username`,`user_email`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="sessions" view="colnames">
+<left>158</left>
+<top>261</top>
+<width>133</width>
+<height>134</height>
+<sql_create_table>CREATE TABLE `sessions` (
+  `session_id` varchar(40) NOT NULL DEFAULT '0',
+  `ip_address` varchar(45) NOT NULL DEFAULT '0',
+  `user_agent` varchar(120) NOT NULL,
+  `last_activity` int(10) unsigned NOT NULL DEFAULT '0',
+  `user_data` text NOT NULL,
+  PRIMARY KEY (`session_id`),
+  KEY `last_activity_idx` (`last_activity`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="gelombang" view="colnames">
+<left>169</left>
+<top>10</top>
+<width>118</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `gelombang` (
+  `gel_id` int(11) NOT NULL AUTO_INCREMENT,
+  `gel_ta` year(4) NOT NULL,
+  `gel_kode` int(4) NOT NULL,
+  `gel_nama` varchar(128) NOT NULL,
+  `gel_tanggal_mulai` date NOT NULL,
+  `gel_tanggal_selesai` date NOT NULL,
+  `gel_jumlah_pilihan` smallint(2) NOT NULL DEFAULT '1',
+  `gel_keterangan` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`gel_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="kuota" view="colnames">
+<left>935</left>
+<top>8</top>
+<width>154</width>
+<height>169</height>
+<sql_create_table>CREATE TABLE `kuota` (
+  `kuota_id` int(11) NOT NULL AUTO_INCREMENT,
+  `kuota_gel` int(11) DEFAULT NULL,
+  `kuota_jur` int(11) DEFAULT NULL,
+  `kuota_jumlah` int(11) NOT NULL,
+  `kuota_cadangan` int(11) NOT NULL,
+  `kuota_keterangan` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`kuota_id`),
+  UNIQUE KEY `UNIQUE` (`kuota_gel`,`kuota_jur`),
+  KEY `kuota_jur` (`kuota_jur`),
+  CONSTRAINT `kuota_gel` FOREIGN KEY (`kuota_gel`) REFERENCES `gelombang` (`gel_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `kuota_jur` FOREIGN KEY (`kuota_jur`) REFERENCES `jurusan` (`jur_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="test" view="colnames">
+<left>776</left>
+<top>220</top>
+<width>130</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `test` (
+  `test_id` int(11) NOT NULL AUTO_INCREMENT,
+  `test_siswa` int(11) DEFAULT NULL,
+  `test_jentest` int(11) DEFAULT NULL,
+  `test_nilai` decimal(5,2) DEFAULT '0.00',
+  PRIMARY KEY (`test_id`),
+  UNIQUE KEY `UNIQUE` (`test_siswa`,`test_jentest`),
+  KEY `test_siswa` (`test_siswa`),
+  KEY `test_jenis` (`test_jentest`),
+  CONSTRAINT `test_jenis` FOREIGN KEY (`test_jentest`) REFERENCES `jenis_test` (`jentest_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `test_siswa` FOREIGN KEY (`test_siswa`) REFERENCES `siswa` (`siswa_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1582 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="jenis_test" view="colnames">
+<left>321</left>
+<top>201</top>
+<width>161</width>
+<height>169</height>
+<sql_create_table>CREATE TABLE `jenis_test` (
+  `jentest_id` int(11) NOT NULL AUTO_INCREMENT,
+  `jentest_gel` int(11) DEFAULT NULL,
+  `jentest_nama` varchar(64) NOT NULL,
+  `jentest_singkatan` char(16) DEFAULT NULL,
+  `jentest_persen` decimal(5,2) NOT NULL,
+  `jentest_keterangan` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`jentest_id`),
+  UNIQUE KEY `UNIQUE` (`jentest_nama`,`jentest_gel`),
+  KEY `jentest_gel` (`jentest_gel`),
+  CONSTRAINT `jentest_gel` FOREIGN KEY (`jentest_gel`) REFERENCES `gelombang` (`gel_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="setting" view="colnames">
+<left>36</left>
+<top>214</top>
+<width>143</width>
+<height>107</height>
+<sql_create_table>CREATE TABLE `setting` (
+  `setting_id` int(11) NOT NULL AUTO_INCREMENT,
+  `setting_nama` char(128) DEFAULT NULL,
+  `setting_value` varchar(255) DEFAULT NULL,
+  UNIQUE KEY `UNIQUE` (`setting_nama`),
+  KEY `setting_id` (`setting_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="link" view="colnames">
+<left>26</left>
+<top>300</top>
+<width>134</width>
+<height>117</height>
+<sql_create_table>CREATE TABLE `link` (
+  `link_id` int(11) NOT NULL AUTO_INCREMENT,
+  `link_text` varchar(255) NOT NULL,
+  `link_url` varchar(255) NOT NULL,
+  KEY `link_id` (`link_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="post" view="colnames">
+<left>202</left>
+<top>405</top>
+<width>125</width>
+<height>128</height>
+<sql_create_table>CREATE TABLE `post` (
+  `post_id` int(11) NOT NULL AUTO_INCREMENT,
+  `post_judul` text NOT NULL,
+  `post_link` text NOT NULL,
+  `post_isi` longtext,
+  `post_user` int(11) DEFAULT NULL,
+  `post_tanggal` date DEFAULT NULL,
+  KEY `post_id` (`post_id`),
+  KEY `post_user` (`post_user`),
+  CONSTRAINT `post_user` FOREIGN KEY (`post_user`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="reset_pass" view="colnames">
+<left>354</left>
+<top>388</top>
+<width>127</width>
+<height>142</height>
+<sql_create_table>CREATE TABLE `reset_pass` (
+  `reset_id` int(11) NOT NULL AUTO_INCREMENT,
+  `reset_users` int(11) DEFAULT NULL,
+  `reset_link` varchar(255) DEFAULT NULL,
+  `reset_input` datetime DEFAULT NULL,
+  `reset_expired` datetime DEFAULT NULL,
+  KEY `reset_id` (`reset_id`),
+  KEY `reset_users` (`reset_users`),
+  CONSTRAINT `reset_users` FOREIGN KEY (`reset_users`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="prestasi" view="colnames">
+<left>281</left>
+<top>118</top>
+<width>129</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `prestasi` (
+  `prestasi_id` int(11) NOT NULL AUTO_INCREMENT,
+  `prestasi_siswa` int(11) DEFAULT NULL,
+  `prestasi_nilai` decimal(5,1) DEFAULT '0.0',
+  PRIMARY KEY (`prestasi_id`),
+  KEY `prestasi_siswa` (`prestasi_siswa`),
+  CONSTRAINT `prestasi_siswa` FOREIGN KEY (`prestasi_siswa`) REFERENCES `siswa` (`siswa_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=528 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="captcha" view="colnames">
+<left>432</left>
+<top>278</top>
+<width>122</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `captcha` (
+  `captcha_id` bigint(13) unsigned NOT NULL AUTO_INCREMENT,
+  `captcha_time` int(10) unsigned NOT NULL,
+  `ip_address` varchar(16) NOT NULL DEFAULT '0',
+  `word` varchar(20) NOT NULL,
+  PRIMARY KEY (`captcha_id`),
+  KEY `word` (`word`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
